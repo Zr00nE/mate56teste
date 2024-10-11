@@ -7,6 +7,12 @@ st.link_button('**📂 Github desse App**', url = git,  help=None, type="primary
 
 
 st.write('#### Aula 1 - 04/10/2024')
+
+colab = 'https://colab.research.google.com/drive/1G55vxN9IL6ASUZ9_7lq3O-7-vjKDduQS?usp=sharing'
+st.link_button('**👨‍💻 Script Minicurso Python para IA**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
+
+
+st.write('#### Aula 1 - 04/10/2024')
 c1, c2 = st.columns(2)
 
 with c1:
