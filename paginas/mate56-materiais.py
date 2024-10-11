@@ -14,7 +14,7 @@ with c1:
 	st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=True)
 
 with c2:
-	slides = 'https://drive.google.com/file/d/12ITiEyXHnSkmNCdPfTNWeLUEBQpHKZbJ/view?usp=sharing'
+	slides = 'https://colab.research.google.com/drive/19TJ3Vme9w60NY0W58STBnYVUCmREx92q?usp=sharing'
 	st.link_button('**👨🏽‍🏫 Slides**', url = slides,  help=None, type="primary", disabled=False, use_container_width=True)
  
 
