@@ -34,3 +34,22 @@ with c1:
 with c2:
 	slides = 'https://drive.google.com/file/d/12ITiEyXHnSkmNCdPfTNWeLUEBQpHKZbJ/view?usp=sharing'
 	st.link_button('**Slides**', url = slides,  help=None, type="primary", disabled=True, use_container_width=True)
+
+
+
+st.write('#### Aula 3 - 18/10/2024')
+c1, c2 = st.columns(2)
+
+with c1:
+	colab = 'https://colab.research.google.com/drive/1YSe6mhROB0aTK394kORESVmDXpUa-a9A?usp=sharing'
+	st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=True)
+
+with c2:
+	slides = 'https://drive.google.com/file/d/12ITiEyXHnSkmNCdPfTNWeLUEBQpHKZbJ/view?usp=sharing'
+	st.link_button('**Slides**', url = slides,  help=None, type="primary", disabled=True, use_container_width=True)
+
+
+
+
+
+
