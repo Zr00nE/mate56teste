@@ -49,6 +49,10 @@ with c2:
 	st.link_button('**Slides**', url = slides,  help=None, type="primary", disabled=True, use_container_width=True)
 
 
+st.write('#### Aula 4 - 25/10/2024')
+colab = 'https://colab.research.google.com/drive/1CjSFcq7Tb0lyfs37lLmY3t77wgZmcGc4?usp=sharing'
+st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
+
 
 
 
