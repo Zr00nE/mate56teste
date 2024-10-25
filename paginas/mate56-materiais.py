@@ -28,7 +28,7 @@ with c2:
 
 st.write('#### Aula 2 - 11/10/2024')
 colab = 'https://colab.research.google.com/drive/19TJ3Vme9w60NY0W58STBnYVUCmREx92q?usp=sharing'
-st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=True)
+st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
 
 st.write('#### Aula 3 - 18/10/2024')
