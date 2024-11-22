@@ -55,18 +55,8 @@ st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, t
 
 
 st.write('#### Aula 7 - 22/11/2024') 
-c1, c2 = st.columns(2)
-
-with c1:
-	colab = 'https://colab.research.google.com/drive/1mSu_gUNC4B5490D81aYIkdc8ylgsvkqL?usp=sharing'
-	st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=True)
-
-with c2:
-	slides = 'https://drive.google.com/file/d/1ToAet9KGBsiDsOniHVjVsM2KF_5kaIui/view?usp=sharing'
-	st.link_button('**👨🏽‍🏫 Slides**', url = slides,  help=None, type="primary", disabled=False, use_container_width=True)
- 
-
-
+colab = 'https://colab.research.google.com/drive/1mSu_gUNC4B5490D81aYIkdc8ylgsvkqL?usp=sharing'
+st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=True)
 
 
 
