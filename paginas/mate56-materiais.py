@@ -61,6 +61,11 @@ st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, t
 
 
 
+st.write('#### Aula 8 - 29/11/2024')
+colab = 'https://colab.research.google.com/drive/1QrebSv4wVsF1nZ_YANm6i5QrNSEKzgG5?usp=sharing'
+st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
+
+
 
 
 
