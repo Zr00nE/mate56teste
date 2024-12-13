@@ -41,11 +41,9 @@ colab = 'https://colab.research.google.com/drive/1CjSFcq7Tb0lyfs37lLmY3t77wgZmcG
 st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
 
-
 st.write('#### Aula 5 - 01/11/2024')
 colab = 'https://colab.research.google.com/drive/1LQ7gF6sbN0gFb_J9tNHUwE0Q_EW44l7h?usp=sharing'
 st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
-
 
 
 st.write('#### Aula 6 - 08/11/2024')
@@ -53,12 +51,9 @@ colab = 'https://colab.research.google.com/drive/1_3ChxxiexwLLqfn_p5GNoWOUfjxDzJ
 st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
 
-
 st.write('#### Aula 7 - 22/11/2024') 
 colab = 'https://colab.research.google.com/drive/1mSu_gUNC4B5490D81aYIkdc8ylgsvkqL?usp=sharing'
 st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
-
-
 
 
 st.write('#### Aula 8 - 29/11/2024')
@@ -66,13 +61,14 @@ colab = 'https://colab.research.google.com/drive/1QrebSv4wVsF1nZ_YANm6i5QrNSEKzg
 st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
 
-
 st.write('#### Aula 9 - 06/12/2024')
 colab = 'https://colab.research.google.com/drive/1ZH6LQMqHdTcSLHikRpv4CzGgfurxNoVa?usp=sharing'
 st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
 
-
+st.write('#### Aula 10 - 12/12/2024')
+colab = 'https://colab.research.google.com/drive/1FMh-spj0jANDaSrsQ2wLe1Q1KhCKvr9S?usp=sharing'
+st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
 
 
