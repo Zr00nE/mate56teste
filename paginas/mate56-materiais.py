@@ -66,9 +66,17 @@ colab = 'https://colab.research.google.com/drive/1ZH6LQMqHdTcSLHikRpv4CzGgfurxNo
 st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
 
-st.write('#### Aula 10 - 12/12/2024')
+st.write('#### Aula 10 - 13/12/2024')
 colab = 'https://colab.research.google.com/drive/1FMh-spj0jANDaSrsQ2wLe1Q1KhCKvr9S?usp=sharing'
 st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
+
+
+
+st.write('#### Aula 11 - 20/12/2024')
+colab = 'https://colab.research.google.com/drive/1sBIo-ly0X0ZrjvMgoPG2VEjSVsJvusZD?usp=sharing'
+st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
+
+
 
 
 
