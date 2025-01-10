@@ -76,6 +76,10 @@ st.write('#### Aula 11 - 20/12/2024')
 colab = 'https://colab.research.google.com/drive/1sBIo-ly0X0ZrjvMgoPG2VEjSVsJvusZD?usp=sharing'
 st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
+st.write('#### Aula 12 - 10/01/2025')
+colab = 'https://colab.research.google.com/drive/1dhb0Tr6rtKr3jxJaiqPmbmTGaoUsaN5G?usp=sharing'
+st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
+
 
 
 
