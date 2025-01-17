@@ -82,7 +82,13 @@ st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, t
 
 
 
+st.write('#### Minicurso Visão Computacional - 15/01/2025')
+colab = 'https://colab.research.google.com/drive/1EgxggnJPEn4XVPeWBML57xwg8-BVqvMa?usp=sharing'
+st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
+st.write('#### Aula 13 - 17/01/2025')
+colab = 'https://colab.research.google.com/drive/1N2wpnG-g5AcE3_9dmbymAnIl3Aq6_iwP?usp=sharing'
+st.link_button('**👨‍💻 Script Google Colab**', url = colab,  help=None, type="primary", disabled=False, use_container_width=False)
 
 
 
