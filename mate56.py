@@ -7,7 +7,7 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="expanded")
 
-st.logo("arquivos/avatar2.jpeg") 
+st.logo("arquivos/logo.png") 
 
 paginas = {
     "Conteúdos": [
