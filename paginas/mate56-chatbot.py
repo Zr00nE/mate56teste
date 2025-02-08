@@ -76,14 +76,14 @@ def transformar_input_usuario(input_usuario):
     :return: Texto estruturado para melhor entendimento do embedding.
     """
     prompt = f"""
-    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, foco em garantir que os itens proibidos sejam identificados:
+    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, foco em garantir que os itens proibidos sejam identificados,:
 
     Pedido: "{input_usuario}"
 
     Retorne o texto no seguinte formato:
     - Ingredientes desejados: [ingredientes ou palavras-chave mencionadas].
     - Ingredientes proibidos: [ingredientes que o usuário não quer].
-    - Proteína desejada: [tipo de proteína mencionada, se houver. Ex: frango, peixe, carne vermelha].
+    - Proteína desejada: [tipo de proteína mencionada, se houver] identifique se a proteina é carnivora, vegana ou vegetariana.
     - Ocasião: [jantar, almoço, lanche, etc., se mencionado].
     - Preferências adicionais: [qualquer outra observação importante].
     """
