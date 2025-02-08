@@ -83,7 +83,7 @@ def transformar_input_usuario(input_usuario):
     Retorne o texto no seguinte formato:
     - Ingredientes desejados: [ingredientes ou palavras-chave mencionadas].
     - Ingredientes proibidos: [ingredientes que o usuário não quer].
-    - Proteína desejada: [tipo de proteína mencionada, se houver] identifique se a proteina é carnivora, vegana ou vegetariana.
+    - Proteína desejada: [tipo de proteína mencionada, se houver] os valores devem ser apenas  ["Vegano", "Vegetariano", "Carnivoro"].
     - Ocasião: [jantar, almoço, lanche, etc., se mencionado].
     - Preferências adicionais: [qualquer outra observação importante].
     """
