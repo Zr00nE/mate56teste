@@ -111,7 +111,7 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
     proibidos = re.search(r"- Ingredientes proibidos: (.+)", output_estruturado)
     proibidos = proibidos.group(1).split(", ") if proibidos else []
 
-    pproteina_match = re.search(r"- Proteína desejada:\s*(.+)", output_estruturado)
+    proteina_match = re.search(r"- Proteína desejada:\s*(.+)", output_estruturado)
     tipo_proteina = proteina_match.group(1).strip() if proteina_match else None
 
      # Função para verificar se o item contém ingredientes proibidos
