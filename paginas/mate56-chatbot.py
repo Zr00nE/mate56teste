@@ -112,7 +112,8 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
 
      # Função para verificar se o item contém ingredientes proibidos
     def contem_proibidos(ingredientes):
-        return any(ingrediente in ingredientes for ingrediente in proibidos)
+        ingredientes_lista = [ing.strip().lower() for ing in ingredientes.split(",")]  # Normaliza o texto
+        return any(ingrediente.lower() in ingredientes_lista for ingrediente in proibidos)
 
 
 
