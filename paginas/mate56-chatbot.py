@@ -12,7 +12,7 @@ client = OpenAI(api_key=openai_api_key)
 
 # Avatares para o usuário e assistente e Cardapio
 avatar_user = 'arquivos/avatar.png'
-avatar_assistent = 'arquivos/avatar2.png'
+avatar_assistent = 'arquivos/avatar2.jpeg'
 card = 'arquivos/CARDAPIO_TOPICOS.xlsx'
 Cardapio = pd.read_excel(card)
 
