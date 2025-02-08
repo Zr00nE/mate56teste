@@ -148,7 +148,7 @@ if prompt:
             if "embeddings" in Cardapio.columns:
                 Cardapio["Indicações"] = Cardapio["embeddings"].apply(lambda x: similaridade_cosseno(input_embedding, x))
                 resultados = Cardapio.sort_values(by="Indicações", ascending=False).reset_index(drop=True)
-                st.dataframe(resultados.head(5))
+                st.dataframe(resultados[,3:5].head(5))
             else:
                 st.error("Erro ao gerar embeddings. Verifique se o Cardápio foi processado corretamente.")
 
