@@ -76,13 +76,14 @@ def transformar_input_usuario(input_usuario):
     :return: Texto estruturado para melhor entendimento do embedding.
     """
     prompt = f"""
-    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada:
+    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, foco em garantir que os itens proibidos sejam identificados:
 
     Pedido: "{input_usuario}"
 
     Retorne o texto no seguinte formato:
     - Ingredientes desejados: [ingredientes ou palavras-chave mencionadas].
     - Ingredientes proibidos: [ingredientes que o usuário não quer].
+    - Proteína desejada: [tipo de proteína mencionada, se houver. Ex: frango, peixe, carne vermelha].
     - Ocasião: [jantar, almoço, lanche, etc., se mencionado].
     - Preferências adicionais: [qualquer outra observação importante].
     """
@@ -109,6 +110,9 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
 
     proibidos = re.search(r"- Ingredientes proibidos: (.+)", output_estruturado)
     proibidos = proibidos.group(1).split(", ") if proibidos else []
+
+    proteina_match = re.search(r"- Proteína desejada:\s*(.+)", output_estruturado)
+    proteinas_desejadas = [p.strip().lower().replace(".", "") for p in proteina_match.group(1).split(",")] if proteina_match else []
 
      # Função para verificar se o item contém ingredientes proibidos
     def contem_proibidos(ingredientes):
