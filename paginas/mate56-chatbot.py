@@ -119,7 +119,7 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
         ingredientes_lista = [ing.strip().lower() for ing in ingredientes.split(",")]  # Normaliza o texto
         return any(ingrediente.lower() in ingredientes_lista for ingrediente in proibidos)
         
-    if tipo_proteina and tipo_proteina in ["Vegano", "Vegetariano", "Carnivoro"]:
+    if tipo_proteina in ["Vegano", "Vegetariano", "Carnivoro"]:
         cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['PROTEINA'] == tipo_proteina]
         return proteina.lower() in proteinas_desejadas
 
