@@ -1,4 +1,4 @@
-!pip install openpyxl
+pip install openpyxl
 import streamlit as st
 from openai import OpenAI
 import numpy as np
