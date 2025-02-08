@@ -114,12 +114,16 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
     def contem_proibidos(ingredientes):
         ingredientes_lista = [ing.strip().lower() for ing in ingredientes.split(",")]  # Normaliza o texto
         return any(ingrediente.lower() in ingredientes_lista for ingrediente in proibidos)
-
+    def contem_proteina(proteina):
+        if not proteinas_desejadas:  # Se o usuário não mencionou proteína, não filtramos por isso
+            return True
+        return proteina.lower() in proteinas_desejadas
 
 
     # Filtrar o DataFrame
     cardapio_filtrado = cardapio[
-        ~cardapio['INGREDIENTES'].apply(contem_proibidos)
+        ~cardapio['INGREDIENTES'].apply(contem_proibidos) & 
+        (cardapio['PROTEINA'].apply(contem_proteina))
     ]
 
     return cardapio_filtrado
