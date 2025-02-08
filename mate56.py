@@ -10,7 +10,7 @@ st.set_page_config(
 st.logo("arquivos/logo.png") 
 
 paginas = {
-    "Conteúdos": [
+    "Seções": [
         st.Page("paginas/mate56-inicial.py", title="Página Inicial", icon = '', default = True), 
         st.Page("paginas/mate56-chatbot.py", title="Assistente de Menu"), 
     ],
