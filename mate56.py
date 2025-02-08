@@ -15,7 +15,7 @@ paginas = {
     ], 
 
     "Aplicativos para os Alunos": [
-        st.Page("paginas/mate56-chatbot.py", title="Assistente de Menu", icon='🐍'), 
+        st.Page("paginas/mate56-chatbot.py", title="Assistente de Menu"), 
     ],
 }
 
