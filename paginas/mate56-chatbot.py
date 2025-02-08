@@ -127,7 +127,6 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
 
     if tipo_proteina in ["Vegano", "Vegetariano", "Carnivoro"]:
         cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['PROTEINA'] == tipo_proteina]
-        return proteina.lower() in proteinas_desejadas
 
     return cardapio_filtrado
 
