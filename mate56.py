@@ -3,11 +3,11 @@ import streamlit as st
 
 st.set_page_config(
     page_title="Assistente ChatBot",
-    page_icon='arquivos/avatar2.png',
+    page_icon='arquivos/avatar2.jpeg',
     layout="centered",
     initial_sidebar_state="expanded")
 
-st.logo("arquivos/logo.png") 
+st.logo("arquivos/avatar2.jpeg") 
 
 paginas = {
     "Conteúdos": [
