@@ -145,9 +145,9 @@ if prompt:
             cardapio_estruturado = Filtrar_Cardapio(output_estruturado, Cardapio)
             input_embedding = Embedding(output_estruturado)
 
-            if "embeddings" in Cardapio.columns:
-                Cardapio["Indicações"] = Cardapio["embeddings"].apply(lambda x: similaridade_cosseno(input_embedding, x))
-                resultados = Cardapio.sort_values(by="Indicações", ascending=False).reset_index(drop=True)
+            if "embeddings" in cardapio_estruturado.columns:
+               cardapio_estruturado["Indicações"] = cardapio_estruturado["embeddings"].apply(lambda x: similaridade_cosseno(input_embedding, x))
+                resultados = cardapio_estruturado.sort_values(by="Indicações", ascending=False).reset_index(drop=True)
                 st.dataframe(resultados[["PRATO","INGREDIENTES"]].head(10))
             else:
                 st.error("Erro ao gerar embeddings. Verifique se o Cardápio foi processado corretamente.")
