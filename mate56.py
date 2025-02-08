@@ -12,9 +12,6 @@ st.logo("arquivos/logo.png")
 paginas = {
     "Conteúdos": [
         st.Page("paginas/mate56-inicial.py", title="Página Inicial", icon = '', default = True), 
-    ], 
-
-    "Aplicativos para os Alunos": [
         st.Page("paginas/mate56-chatbot.py", title="Assistente de Menu"), 
     ],
 }
