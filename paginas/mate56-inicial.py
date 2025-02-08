@@ -1,25 +1,15 @@
 import streamlit as st
  
-st.title('MATE56 - Inteligência Artificial')  
+st.title('Menu Restaurante Le Palais')  
 
 '''
-Olá, pessoal! 👋
+Olá 👋
 
-Este é o **aplicativo online** que vamos usar na disciplina **MATE56** da **UFBA 2024.2**. 
+Este é um **assistente virtual** para encontrar seu prato desejado de forma mais eficiente no restaurante Le Palais . 
 
-Aqui, vamos reunir conteúdos e ferramentas que construiremos durante as aulas, e ele será o ponto central para **compartilhar materiais** e **novidades** da disciplina.
+Se algo estranho ou errado acontecer, relate ao restaurante. ⚠️
 
-Tudo que vocês precisarem estará disponível nessa página, então fiquem ligados! 
+Bom apetite!
 
-Apps disponíveis até o momento:
-
-- 🐍 Instrutor de Python
-
-**Lembrem-se:** com tecnologia GPT, tudo pode estar errado, então usem com atenção. Qualquer coisa esquisita que acontecem, **relate!** ⚠️
-
-Se tiverem sugestões ou dúvidas, me chamem! Espero que tenham todos uma ótima experiência.
-
-Bora aprender! 💪
-
-Prof. Ricardo  
+Restaurante Le Palais
 '''  
