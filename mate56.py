@@ -1,4 +1,4 @@
-import streamlit as st
+    import streamlit as st
 
 
 st.set_page_config(
@@ -12,8 +12,6 @@ st.logo("arquivos/logo.png")
 paginas = {
     "Conteúdos": [
         st.Page("paginas/mate56-inicial.py", title="Página Inicial", icon = '', default = True), 
-        st.Page("paginas/mate56-materiais.py", title="Materiais de Aula", icon = ''), 
-        st.Page("paginas/mate56-links.py", title="Links e Referências", icon = ''), 
     ], 
 
     "Aplicativos para os Alunos": [
