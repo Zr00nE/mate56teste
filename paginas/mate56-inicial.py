@@ -3,13 +3,20 @@ import streamlit as st
 st.title('Menu Restaurante Le Palais')  
 
 '''
-Olá 👋
+Bem-vindo ao Restaurante Le Palais!
 
-Este é um **assistente virtual** para encontrar seu prato desejado de forma mais eficiente no restaurante Le Palais . 
+Olá! 👋 Sou seu assistente virtual e estou aqui para tornar sua experiência gastronômica mais prática e personalizada.
 
-Se algo estranho ou errado acontecer, relate ao restaurante. ⚠️
+🔎 Como posso te ajudar?
+Com base nos seus gostos e restrições alimentares, sugiro pratos que combinam perfeitamente com seu paladar. Se estiver em dúvida sobre o que escolher, posso recomendar opções especiais do nosso cardápio!
 
-Bom apetite!
+🥗 Tem alguma restrição alimentar?
+Não se preocupe! Nossas sugestões levam em conta suas preferências e necessidades, garantindo uma experiência saborosa e segura.
+
+📢 Dúvidas ou problemas?
+Se algo não estiver certo ou precisar de ajustes, entre em contato com nossa equipe. Estamos sempre prontos para ajudar!
+
+🍷 Aproveite sua refeição e bom apetite!
 
 Restaurante Le Palais
 '''  
