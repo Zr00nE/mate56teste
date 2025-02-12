@@ -107,10 +107,19 @@ def Embedding(texto):
 
 def Filtrar_Cardapio(output_estruturado, cardapio):
 
-    #Extrair ingredientes proibidos e remover colchetes
+    import re
+
+def Filtrar_Cardapio(output_estruturado, cardapio):
+
+    # Extrair ingredientes proibidos e remover colchetes
     proibidos_match = re.search(r"- Ingredientes proibidos: \[(.*?)\]", output_estruturado)
     proibidos = proibidos_match.group(1).split(", ") if proibidos_match else []
     proibidos = [p.strip().lower() for p in proibidos]  # Normaliza o texto
+
+    # Extrair ingredientes desejados e remover colchetes
+    desejados_match = re.search(r"- Ingredientes desejados: \[(.*?)\]", output_estruturado)
+    desejados = desejados_match.group(1).split(", ") if desejados_match else []
+    desejados = [d.strip().lower() for d in desejados]  # Normaliza o texto
 
     # Extrair tipo de proteína desejada
     proteina_match = re.search(r"- Proteína desejada:\s*\[(.*?)\]", output_estruturado)
@@ -123,15 +132,25 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
         ingredientes_lista = [ing.strip().lower() for ing in re.split(r",\s*", ingredientes)]
         return any(ingrediente in ingredientes_lista for ingrediente in proibidos)
 
+    # Função para verificar se o item contém ingredientes desejados
+    def contem_desejados(ingredientes):
+        if not desejados:
+            return True  # Se não há ingredientes desejados, não filtra
+        ingredientes_lista = [ing.strip().lower() for ing in re.split(r",\s*", ingredientes)]
+        return any(ingrediente in ingredientes_lista for ingrediente in desejados)
+
     # Filtrar o DataFrame removendo pratos com ingredientes proibidos
     cardapio_filtrado = cardapio[~cardapio['INGREDIENTES'].apply(contem_proibidos)]
+
+    # Filtrar pratos que contenham ao menos um ingrediente desejado
+    cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['INGREDIENTES'].apply(contem_desejados)]
 
     # Filtrar por tipo de proteína se necessário
     if tipo_proteina and tipo_proteina in ["Vegano", "Vegetariano", "Carnivoro"]:
         cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['PROTEINA'].str.lower() == tipo_proteina.lower()]
 
-
     return cardapio_filtrado
+
 
 ##############################################################################################################################################################################
 
