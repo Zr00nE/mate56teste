@@ -81,8 +81,8 @@ def transformar_input_usuario(input_usuario):
     Pedido: "{input_usuario}"
 
     Retorne o texto no seguinte formato:
-    - Ingredientes desejados: [ingredientes que o usuario quer, ingredientes comestiveis , caso não haja ingredientes desejados deixe em branco]
-    - Ingredientes proibidos: [ingredientes que o usuário não quer , ou tem alergia, ou não gostam, acrescente possiveis variações do tipo do alimento, caso não haja ingredientes proibidos deixe em branco]
+    - Ingredientes desejados: [ingredientes que o usuario quer, ingredientes comestiveis , caso não haja ingredientes desejados deixe em vazio]
+    - Ingredientes proibidos: [ingredientes que o usuário não quer , ou tem alergia, ou não gostam, acrescente possiveis variações do tipo do alimento, caso não haja ingredientes proibidos deixe em vazio]
     - Proteína desejada: [tipo de proteína mencionada, se houver] os valores devem ser apenas  Vegano ou Vegetariano ou Carnivoro
     - Ocasião: [jantar, almoço, lanche, etc., se mencionado]
     - Preferências adicionais: [qualquer outra observação importante]
