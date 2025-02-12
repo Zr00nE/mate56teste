@@ -143,7 +143,9 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
     cardapio_filtrado = cardapio[~cardapio['INGREDIENTES'].apply(contem_proibidos)]
 
     # Filtrar pratos que contenham ao menos um ingrediente desejado
-    cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['INGREDIENTES'].apply(contem_desejados)]
+    if desejados:  
+        cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['INGREDIENTES'].apply(contem_desejados)]
+
 
     # Filtrar por tipo de proteína se necessário
     if tipo_proteina and tipo_proteina in ["Vegano", "Vegetariano", "Carnivoro"]:
