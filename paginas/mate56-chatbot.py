@@ -80,12 +80,12 @@ def transformar_input_usuario(input_usuario):
 
     Pedido: "{input_usuario}"
 
-    Retorne o texto no seguinte formato:
-    - Ingredientes desejados: [ingredientes que o usuario quer, ingredientes comestiveis , caso não haja ingredientes desejados deixe em vazio]
-    - Ingredientes proibidos: [ingredientes que o usuário não quer , ou tem alergia, ou não gostam, acrescente possiveis variações do tipo do alimento, caso não haja ingredientes proibidos deixe em vazio]
-    - Proteína desejada: [tipo de proteína mencionada, se houver] os valores devem ser apenas  Vegano ou Vegetariano ou Carnivoro
-    - Ocasião: [jantar, almoço, lanche, etc., se mencionado]
-    - Preferências adicionais: [qualquer outra observação importante]
+    ### **Formato de saída esperado:**  
+    - Ingredientes desejados: [ingredientes específicos que o usuário quer, apenas ingredientes comestíveis; caso não haja, retorne vazio: []]  
+    - Ingredientes proibidos: [ingredientes que o usuário não quer, tem alergia ou não gosta, incluindo variações do nome do alimento; caso não haja, retorne vazio: []]  
+    - Proteína desejada: [tipo de proteína mencionada; deve ser obrigatoriamente "Vegano", "Vegetariano" ou "Carnivoro"; se não especificado, retorne "Carnivoro"]  
+    - Ocasião: [jantar, almoço, lanche, café da manhã, etc.; caso não seja mencionado, retorne "não mencionada"]  
+    - Preferências adicionais: [qualquer outra observação relevante; caso não haja, retorne "nenhuma"]  
     """
 
     response = client.chat.completions.create(
