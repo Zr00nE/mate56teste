@@ -83,7 +83,7 @@ def transformar_input_usuario(input_usuario):
     ### **Formato de saída esperado:**  
     - Ingredientes desejados: [ingredientes específicos que o usuário quer, apenas ingredientes comestíveis; caso não haja, retorne vazio: []]  
     - Ingredientes proibidos: [ingredientes que o usuário não quer, tem alergia ou não gosta, incluindo variações do nome do alimento;incluindo possíveis variações do nome do alimento.
-    Exemplo: "cebola" deve incluir "cebola roxa", "cebola caramelizada", "cebola branca", "cebolinha".  caso não haja, retorne vazio: []]  
+    Exemplo: cebola deve incluir cebola roxa, cebola caramelizada, cebola branca, cebolinha, caso não haja, retorne vazio: []]  
     - Proteína desejada: [tipo de proteína mencionada; deve ser obrigatoriamente "Vegano", "Vegetariano" ou "Carnivoro"; se não especificado, retorne "Carnivoro"]  
     - Ocasião: [jantar, almoço, lanche, café da manhã, etc.; caso não seja mencionado, retorne "não mencionada"]  
     - Preferências adicionais: [qualquer outra observação relevante; caso não haja, retorne "nenhuma"]  
