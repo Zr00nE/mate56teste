@@ -97,7 +97,7 @@ def transformar_input_usuario(input_usuario):
     - "Doce" → Adicione ingredientes como chocolate, mel, açúcar mascavo, frutas caramelizadas, etc.  
     - "Leve" → Priorize ingredientes como frango, peixe, folhas verdes, e evite frituras.  
     - "Confortável" → Dê preferência a pratos quentes e cremosos, como massas e ensopados.
-    - "Frutos-do-mar" → incluir variações comuns de peixe como atum, salmao, truta e outros animais marinhos como polvo e lula inclua camarao e camaroes e moluscos.
+    - "Frutos-do-mar" → incluir variações comuns de peixe como atum, salmao, truta, tilapia, Peixe branco e outros animais marinhos como polvo , lula e lagosta inclua camarao e camaroes e moluscos.
     
     Se necessário, interprete o contexto para preencher informações ausentes.  
     """
