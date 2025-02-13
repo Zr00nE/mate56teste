@@ -76,31 +76,33 @@ def transformar_input_usuario(input_usuario):
     :return: Texto estruturado para melhor entendimento do embedding.
     """
     prompt = f"""
-    Transforme o seguinte pedido do usuário em um formato estruturado, garantindo que os ingredientes proibidos, desejados e as preferências sejam corretamente identificadas.  
-
-Caso o usuário esteja pedindo uma recomendação genérica, defina um estilo de recomendação apropriado.  
-
-### **Entrada:**  
-Pedido: "{input_usuario}"  
-
+       Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, garantindo que:  
+    - Ingredientes desejados e proibidos sejam extraídos corretamente e normalizados para facilitar a correspondência no banco de dados.  
+    - Termos subjetivos (como "apimentado", "doce", "leve") sejam convertidos para ingredientes específicos.  
+    - Preferências de estilo culinário sejam identificadas, caso existam.  
+    - A estrutura do output esteja consistente com o esperado pela função de filtragem.  
+    
+    Pedido: "{input_usuario}"
+    
     ### **Formato de saída esperado:**  
-    - **Tipo de Requisição:** ["Ingredientes específicos", "Estilo culinário", "Ocasião", "Sugestão genérica", "Ingredientes disponíveis"]  
-      - "Ingredientes específicos" → O usuário mencionou ingredientes que deseja ou quer evitar.  
-      - "Estilo culinário" → O usuário mencionou um estilo de comida (ex.: mexicana, italiana, japonesa).  
-      - "Ocasião" → O usuário mencionou uma refeição específica (ex.: almoço, jantar, lanche).  
-      - "Sugestão genérica" → O usuário quer apenas recomendações sem restrições específicas.  
-      - "Ingredientes disponíveis" → O usuário quer recomendações baseadas no que ele tem na cozinha.  
+    - **Ingredientes desejados:** [Lista de ingredientes mencionados ou inferidos, com normalização (primeira letra maiúscula e sem variações inconsistentes); caso não haja, retorne []]  
+    - **Ingredientes proibidos:** [Lista de ingredientes que o usuário não quer, com sinônimos e variações normalizadas (ex.: "Peixe" deve incluir "Tilápia", "Salmão", "Atum", etc.); caso não haja, retorne []]  
+    - **Proteína desejada:** ["Vegano", "Vegetariano" ou "Carnívoro"; se não especificado, retorne "Carnívoro"]  
+    - **Ocasião:** ["Jantar", "Almoço", "Lanche", "Café da manhã", etc.; caso não seja mencionado, retorne "Não mencionada"]  
+    - **Preferências adicionais:** ["Nenhuma" ou outras observações importantes, como nível de dificuldade, tempo de preparo, etc.]  
+    - **Estilo culinário:** ["Mexicano", "Indiano", "Mediterrâneo", etc.; se não especificado, retorne "Não mencionado"]  
     
-    - **Ingredientes desejados:** [Lista dos ingredientes específicos mencionados pelo usuário; se não houver, retorne `[]`.]  
-    - **Ingredientes proibidos:** [Lista dos ingredientes que o usuário quer evitar (incluindo sinônimos e variações); se não houver, retorne `[]`.]  
-    - **Proteína desejada:** ["Vegano", "Vegetariano", "Carnívoro"; se não especificado, retorne `"Carnívoro"`.]  
-    - **Estilo culinário:** [Mexicana, Italiana, Japonesa, Brasileira, etc.; se não mencionado, retorne `"Não mencionado"`.]  
-    - **Ocasião:** [Jantar, Almoço, Lanche, Café da manhã, etc.; se não mencionado, retorne `"Não mencionada"`.]  
-    - **Ingredientes disponíveis:** [Se o usuário mencionou o que tem em casa, liste aqui; se não, retorne `[]`.]  
-    - **Preferências adicionais:** [Outros detalhes relevantes, como nível de picância, restrições alimentares, modo de preparo, etc.; se não houver, retorne `"Nenhuma"`.]  
+    ### **Conversão e Normalização de Termos Subjetivos:**  
+    - "Apimentado" → Adicione ingredientes como "Pimenta dedo-de-moça", "Jalapeño", "Pimenta caiena".  
+    - "Doce" → Adicione ingredientes como "Mel", "Açúcar mascavo", "Frutas caramelizadas".  
+    - "Leve" → Priorize ingredientes como "Frango", "Peixe", "Folhas verdes", evitando frituras.  
+    - "Confortável" → Priorize pratos quentes e cremosos, como "Massas", "Ensopados".  
     
-    Se necessário, interprete o contexto para preencher informações ausentes.  
-    """
+    ### **Regras de Normalização para Compatibilidade com o Filtro:**  
+    - Cada ingrediente deve começar com a primeira letra maiúscula.  
+    - Ingredientes proibidos devem incluir variações conhecidas para evitar falhas na filtragem.  
+    - Se o usuário solicitar apenas uma recomendação genérica, preencha "Sugestão genérica" na seção de tipo de requisição.   
+        """
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -119,11 +121,7 @@ def Embedding(texto):
 
     return response.data[0].embedding
 
-def Filtrar_Cardapio(output_estruturado, cardapio):
 
-    import re
-
-import re
 def Filtrar_Cardapio(output_estruturado, cardapio):
     # Extrair e normalizar ingredientes proibidos
     proibidos_match = re.search(r"- Ingredientes proibidos: \[(.*?)\]", output_estruturado)
