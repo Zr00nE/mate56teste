@@ -92,8 +92,8 @@ def transformar_input_usuario(input_usuario):
     - Estilo culinário: ["Mexicano", "Indiano", "Mediterrâneo", etc.; se não especificado, retorne "não mencionado"]  
     
     ### **Conversão de termos subjetivos:**  
-    - "Apimentado" → Adicione ingredientes como pimenta dedo-de-moça, jalapeño, pimenta caiena, etc.  
-    - "Doce" → Adicione ingredientes como mel, açúcar mascavo, frutas caramelizadas, etc.  
+    - "Apimentado" → Adicione ingredientes como pimenta, pimenta dedo-de-moça, jalapeño, pimenta caiena, etc.  
+    - "Doce" → Adicione ingredientes como chocolate, mel, açúcar mascavo, frutas caramelizadas, etc.  
     - "Leve" → Priorize ingredientes como frango, peixe, folhas verdes, e evite frituras.  
     - "Confortável" → Dê preferência a pratos quentes e cremosos, como massas e ensopados.  
     
@@ -124,11 +124,12 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
 import re
 
 def Filtrar_Cardapio(output_estruturado, cardapio):
+    import re
 
     # Extrair ingredientes proibidos e normalizar
     proibidos_match = re.search(r"- Ingredientes proibidos: \[(.*?)\]", output_estruturado)
     proibidos = proibidos_match.group(1).split(", ") if proibidos_match else []
-    proibidos = [p.strip().lower() for p in proibidos if p.strip()]  # Remove espaços extras e valores vazios
+    proibidos = [p.strip().lower() for p in proibidos if p.strip()]
 
     # Extrair ingredientes desejados e normalizar
     desejados_match = re.search(r"- Ingredientes desejados: \[(.*?)\]", output_estruturado)
@@ -148,8 +149,6 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
 
     # Função para verificar se o item contém ingredientes desejados
     def contem_desejados(ingredientes):
-        if not desejados:
-            return True  # Se não há desejados, aceita todos os pratos
         ingredientes_lista = [ing.strip().lower() for ing in re.split(r",\s*", ingredientes)]
         return any(ingrediente in ingredientes_lista for ingrediente in desejados)
 
@@ -159,7 +158,14 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
     if proibidos:
         cardapio_filtrado = cardapio_filtrado[~cardapio_filtrado['INGREDIENTES'].apply(contem_proibidos)]
 
-    if desejados:
+    # 🔹 Verificar se algum dos ingredientes desejados existe no cardápio
+    ingredientes_existentes = set()
+    for ingredientes in cardapio_filtrado['INGREDIENTES']:
+        ingredientes_existentes.update(ing.strip().lower() for ing in re.split(r",\s*", ingredientes))
+
+    desejados_validos = [d for d in desejados if d in ingredientes_existentes]
+
+    if desejados_validos:  # Só filtra se pelo menos um dos ingredientes desejados estiver presente no dataset
         cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['INGREDIENTES'].apply(contem_desejados)]
 
     if tipo_proteina and tipo_proteina in ["Vegano", "Vegetariano", "Carnivoro"]:
