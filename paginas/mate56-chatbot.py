@@ -76,29 +76,28 @@ def transformar_input_usuario(input_usuario):
     :return: Texto estruturado para melhor entendimento do embedding.
     """
     prompt = f"""
-    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, garantindo que:  
-    - Ingredientes desejados e proibidos sejam extraídos corretamente.  
-    - Termos subjetivos (como "apimentado", "doce", "leve") sejam convertidos para ingredientes específicos.  
-    - Preferências de estilo culinário sejam identificadas, caso existam.  
-    - Acrescente sempre a versão no singular e no plural e remova todos os acentos nos nomes.
-    - Para ingredientes do tipo animal coloque a primeira letra maiuscula
-    
-    Pedido: "{input_usuario}"
-    
+    Transforme o seguinte pedido do usuário em um formato estruturado, garantindo que os ingredientes proibidos, desejados e as preferências sejam corretamente identificadas.  
+
+Caso o usuário esteja pedindo uma recomendação genérica, defina um estilo de recomendação apropriado.  
+
+### **Entrada:**  
+Pedido: "{input_usuario}"  
+
     ### **Formato de saída esperado:**  
-    - Ingredientes desejados: ["Lista de ingredientes mencionados ou inferidos a partir da descrição ; caso não haja, retorne []"]  
-    - Ingredientes proibidos: ["Lista de ingredientes que o usuário não quer, incluindo possíveis variações do nome; caso não haja, retorne []"]  
-    - Proteína desejada: ["Vegano", "Vegetariano" ou "Carnívoro"; se não especificado, retorne "Carnívoro"]  
-    - Ocasião: ["Jantar", "Almoço", "Lanche", "Café da manhã", etc.; caso não seja mencionado, retorne "não mencionada"]  
-    - Preferências adicionais: ["Nenhuma" ou outras observações importantes, como nível de dificuldade, tempo de preparo, etc.]  
-    - Estilo culinário: ["Mexicano", "Indiano", "Mediterrâneo", etc.; se não especificado, retorne "não mencionado"]  
+    - **Tipo de Requisição:** ["Ingredientes específicos", "Estilo culinário", "Ocasião", "Sugestão genérica", "Ingredientes disponíveis"]  
+      - "Ingredientes específicos" → O usuário mencionou ingredientes que deseja ou quer evitar.  
+      - "Estilo culinário" → O usuário mencionou um estilo de comida (ex.: mexicana, italiana, japonesa).  
+      - "Ocasião" → O usuário mencionou uma refeição específica (ex.: almoço, jantar, lanche).  
+      - "Sugestão genérica" → O usuário quer apenas recomendações sem restrições específicas.  
+      - "Ingredientes disponíveis" → O usuário quer recomendações baseadas no que ele tem na cozinha.  
     
-    ### **Conversão de termos subjetivos:**  
-    - "Apimentado" → Adicione ingredientes como pimenta, pimenta dedo-de-moça, jalapeño, pimenta caiena, etc.  
-    - "Doce" → Adicione ingredientes como chocolate, mel, açúcar mascavo, frutas caramelizadas, etc.  
-    - "Leve" → Priorize ingredientes como frango, peixe, folhas verdes, e evite frituras.  
-    - "Confortável" → Dê preferência a pratos quentes e cremosos, como massas e ensopados.
-    - "Frutos-do-mar" → incluir variações comuns de peixe como atum, salmao, truta, tilapia, Peixe branco e outros animais marinhos como polvo , lula e lagosta inclua camarao e camaroes e moluscos.
+    - **Ingredientes desejados:** [Lista dos ingredientes específicos mencionados pelo usuário; se não houver, retorne `[]`.]  
+    - **Ingredientes proibidos:** [Lista dos ingredientes que o usuário quer evitar (incluindo sinônimos e variações); se não houver, retorne `[]`.]  
+    - **Proteína desejada:** ["Vegano", "Vegetariano", "Carnívoro"; se não especificado, retorne `"Carnívoro"`.]  
+    - **Estilo culinário:** [Mexicana, Italiana, Japonesa, Brasileira, etc.; se não mencionado, retorne `"Não mencionado"`.]  
+    - **Ocasião:** [Jantar, Almoço, Lanche, Café da manhã, etc.; se não mencionado, retorne `"Não mencionada"`.]  
+    - **Ingredientes disponíveis:** [Se o usuário mencionou o que tem em casa, liste aqui; se não, retorne `[]`.]  
+    - **Preferências adicionais:** [Outros detalhes relevantes, como nível de picância, restrições alimentares, modo de preparo, etc.; se não houver, retorne `"Nenhuma"`.]  
     
     Se necessário, interprete o contexto para preencher informações ausentes.  
     """
