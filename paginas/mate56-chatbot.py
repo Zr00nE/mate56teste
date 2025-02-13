@@ -80,7 +80,8 @@ def transformar_input_usuario(input_usuario):
     - Ingredientes desejados e proibidos sejam extraídos corretamente.  
     - Termos subjetivos (como "apimentado", "doce", "leve") sejam convertidos para ingredientes específicos.  
     - Preferências de estilo culinário sejam identificadas, caso existam.  
-    - Ponha os ingredientes no singular com a primeira letra maiuscula e remova o til.
+    - Acrescente sempre a versão no singular e no plural e remova o til.
+    - Para ingredientes do tipo animal coloque a primeira letra maiuscula
     
     Pedido: "{input_usuario}"
     
