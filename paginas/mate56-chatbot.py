@@ -71,22 +71,33 @@ def similaridade_cosseno(vetor1, vetor2):
 def transformar_input_usuario(input_usuario):
     """
     Usa GPT para transformar o input do usuário em um formato estruturado.
-
+    
     :param input_usuario: Texto original do usuário.
     :return: Texto estruturado para melhor entendimento do embedding.
     """
     prompt = f"""
-    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, foco em garantir que os itens proibidos e os ingredientes desejados sejam identificados,:
-
+    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, garantindo que:  
+    - Ingredientes desejados e proibidos sejam extraídos corretamente.  
+    - Termos subjetivos (como "apimentado", "doce", "leve") sejam convertidos para ingredientes específicos.  
+    - Preferências de estilo culinário sejam identificadas, caso existam.  
+    
     Pedido: "{input_usuario}"
-
+    
     ### **Formato de saída esperado:**  
-    - Ingredientes desejados: [ingredientes específicos que o usuário quer, apenas ingredientes comestíveis; caso não haja, retorne vazio: []]  
-    - Ingredientes proibidos: [ingredientes que o usuário não quer, tem alergia ou não gosta, incluindo variações do nome do alimento;incluindo possíveis variações do nome do alimento.
-    Exemplo: cebola deve incluir cebola roxa, cebola caramelizada, cebola branca, cebolinha, caso não haja, retorne vazio: []]  
-    - Proteína desejada: [tipo de proteína mencionada; deve ser obrigatoriamente "Vegano", "Vegetariano" ou "Carnivoro"; se não especificado, retorne "Carnivoro"]  
-    - Ocasião: [jantar, almoço, lanche, café da manhã, etc.; caso não seja mencionado, retorne "não mencionada"]  
-    - Preferências adicionais: [qualquer outra observação relevante; caso não haja, retorne "nenhuma"]  
+    - Ingredientes desejados: [Lista de ingredientes mencionados ou inferidos a partir da descrição; caso não haja, retorne []]  
+    - Ingredientes proibidos: [Lista de ingredientes que o usuário não quer, incluindo possíveis variações do nome; caso não haja, retorne []]  
+    - Proteína desejada: ["Vegano", "Vegetariano" ou "Carnívoro"; se não especificado, retorne "Carnívoro"]  
+    - Ocasião: ["Jantar", "Almoço", "Lanche", "Café da manhã", etc.; caso não seja mencionado, retorne "não mencionada"]  
+    - Preferências adicionais: ["Nenhuma" ou outras observações importantes, como nível de dificuldade, tempo de preparo, etc.]  
+    - Estilo culinário: ["Mexicano", "Indiano", "Mediterrâneo", etc.; se não especificado, retorne "não mencionado"]  
+    
+    ### **Conversão de termos subjetivos:**  
+    - "Apimentado" → Adicione ingredientes como pimenta dedo-de-moça, jalapeño, pimenta caiena, etc.  
+    - "Doce" → Adicione ingredientes como mel, açúcar mascavo, frutas caramelizadas, etc.  
+    - "Leve" → Priorize ingredientes como frango, peixe, folhas verdes, e evite frituras.  
+    - "Confortável" → Dê preferência a pratos quentes e cremosos, como massas e ensopados.  
+    
+    Se necessário, interprete o contexto para preencher informações ausentes.  
     """
 
     response = client.chat.completions.create(
