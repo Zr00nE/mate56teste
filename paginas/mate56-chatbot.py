@@ -80,7 +80,7 @@ def transformar_input_usuario(input_usuario):
     - Ingredientes desejados e proibidos sejam extraídos corretamente.  
     - Termos subjetivos (como "apimentado", "doce", "leve") sejam convertidos para ingredientes específicos.  
     - Preferências de estilo culinário sejam identificadas, caso existam.  
-    - Ponha os ingredientes no singular e remova o til.
+    - Ponha os ingredientes no singular com a primeira letra maiuscula e remova o til.
     
     Pedido: "{input_usuario}"
     
@@ -97,7 +97,7 @@ def transformar_input_usuario(input_usuario):
     - "Doce" → Adicione ingredientes como chocolate, mel, açúcar mascavo, frutas caramelizadas, etc.  
     - "Leve" → Priorize ingredientes como frango, peixe, folhas verdes, e evite frituras.  
     - "Confortável" → Dê preferência a pratos quentes e cremosos, como massas e ensopados.
-    - "Frutos-do-mar" → incluir variações comuns de peixe como atum, salmao e outros animais marinhos como polvo e lula e camaroes.
+    - "Frutos-do-mar" → incluir variações comuns de peixe como atum, salmao, truta e outros animais marinhos como polvo e lula inclua camarao e camaroes e moluscos.
     
     Se necessário, interprete o contexto para preencher informações ausentes.  
     """
