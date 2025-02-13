@@ -78,7 +78,7 @@ def transformar_input_usuario(input_usuario):
     prompt = f"""
        Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, garantindo que:  
     - Todos os ingredientes (desejados e proibidos) sejam convertidos para minúsculas e estejam em um formato consistente para comparação direta.  
-    - Ingredientes proibidos incluam sinônimos e variações conhecidas (ex.: "peixe" deve incluir "tilápia", "salmão", "atum", etc.).  
+    - Ingredientes proibidos incluam sinônimos e variações conhecidas e suas variações no plural (ex.: "peixe" deve incluir "tilápia", "salmão", "atum", etc.).  
     - Ingredientes desejados sejam expandidos para incluir variações conhecidas (ex.: "queijo" deve incluir "muçarela", "cheddar", "parmesão").  
     - Termos subjetivos (como "apimentado", "doce", "leve") sejam convertidos para ingredientes específicos.  
     - Preferências de estilo culinário e ocasião sejam identificadas com palavras-chave padronizadas.  
@@ -128,59 +128,59 @@ def Embedding(texto):
     return response.data[0].embedding
 
 
-def Filtrar_Cardapio(output_estruturado, cardapio):
-    # Extrair e normalizar ingredientes proibidos
-    proibidos_match = re.search(r"- Ingredientes proibidos: \[(.*?)\]", output_estruturado)
-    proibidos = proibidos_match.group(1).split(", ") if proibidos_match else []
-    proibidos = [p.strip().lower() for p in proibidos if p.strip()]
-
-    # Extrair e normalizar ingredientes desejados
-    desejados_match = re.search(r"- Ingredientes desejados: \[(.*?)\]", output_estruturado)
-    desejados = desejados_match.group(1).split(", ") if desejados_match else []
-    desejados = [d.strip().lower() for d in desejados if d.strip()]
-
-    # Extrair tipo de proteína desejada
-    proteina_match = re.search(r"- Proteína desejada:\s*\[(.*?)\]", output_estruturado)
-    tipo_proteina = proteina_match.group(1).strip().title() if proteina_match else None
+def Filtrar_Cardapio(input_json, cardapio):
+    """
+    Filtra o cardápio com base nas preferências do usuário, recebendo um JSON estruturado como input.
+    
+    :param input_json: Dicionário contendo preferências de ingredientes, proteínas, ocasião, etc.
+    :param cardapio: DataFrame contendo o cardápio completo.
+    :return: DataFrame filtrado de acordo com as preferências do usuário.
+    """
+    
+    # Extrair informações do JSON de input
+    ingredientes_desejados = [i.strip() for i in input_json.get("ingredientes_desejados", [])]
+    ingredientes_proibidos = [i.strip() for i in input_json.get("ingredientes_proibidos", [])]
+    tipo_proteina = input_json.get("proteina", "carnívoro").strip()
 
     # Normalizar ingredientes do cardápio
-    cardapio["INGREDIENTES"] = cardapio["INGREDIENTES"].apply(lambda x: [ing.strip().lower() for ing in re.split(r",\s*", x)])
+    cardapio["INGREDIENTES"] = cardapio["INGREDIENTES"].apply(lambda x: [ing.strip() for ing in x.split(",")])
 
-    # Função para verificar se um item contém ingredientes proibidos (inclui substrings)
+    # Função para verificar se um prato contém ingredientes proibidos
     def contem_proibidos(ingredientes):
-        return any(any(p in ing for ing in ingredientes) for p in proibidos)
+        return any(p in ingredientes for p in ingredientes_proibidos)
 
-    # Função para verificar se um item contém ingredientes desejados (inclui substrings)
+    # Função para verificar se um prato contém ingredientes desejados
     def contem_desejados(ingredientes):
-        return any(any(d in ing for ing in ingredientes) for d in desejados)
+        return any(d in ingredientes for d in ingredientes_desejados)
 
     # Criar uma cópia do cardápio para filtrar
     cardapio_filtrado = cardapio.copy()
 
     # Remover pratos com ingredientes proibidos
-    if proibidos:
+    if ingredientes_proibidos:
         cardapio_filtrado = cardapio_filtrado[~cardapio_filtrado["INGREDIENTES"].apply(contem_proibidos)]
 
     # Aplicar o filtro de desejados apenas se houver ingredientes válidos no dataset
     ingredientes_existentes = set(ing for lista in cardapio_filtrado["INGREDIENTES"] for ing in lista)
-    desejados_validos = [d for d in desejados if any(d in ing for ing in ingredientes_existentes)]
+    desejados_validos = [d for d in ingredientes_desejados if d in ingredientes_existentes]
 
     if desejados_validos:
         cardapio_filtrado = cardapio_filtrado[cardapio_filtrado["INGREDIENTES"].apply(contem_desejados)]
 
-    # Ajustar a filtragem de proteínas para aceitar variações de nome
+    # Ajustar a filtragem de proteínas para aceitar as categorias do dataset
     proteina_mapeamento = {
-        "Carnívoro": ["Carnívoro", "Carne", "Frango", "Bovina", "Suína"],
-        "Vegetariano": ["Vegetariano", "Ovo-Lacto", "Ovolactovegetariano"],
-        "Vegano": ["Vegano", "100% Vegetal"]
+        "carnívoro": ["carnívoro"],
+        "vegetariano": ["vegetariano"],
+        "vegano": ["vegano"]
     }
 
     if tipo_proteina in proteina_mapeamento:
         proteinas_validas = proteina_mapeamento[tipo_proteina]
         cardapio_filtrado = cardapio_filtrado[
-            cardapio_filtrado["PROTEINA"].str.title().isin(proteinas_validas)
+            cardapio_filtrado["PROTEINA"].isin(proteinas_validas)
         ]
 
+    # Retornar o cardápio filtrado
     return cardapio_filtrado
 
 
