@@ -125,54 +125,58 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
     import re
 
 import re
-
 def Filtrar_Cardapio(output_estruturado, cardapio):
-    import re
 
-    # Extrair ingredientes proibidos e normalizar
+    # Extrair e normalizar ingredientes proibidos
     proibidos_match = re.search(r"- Ingredientes proibidos: \[(.*?)\]", output_estruturado)
     proibidos = proibidos_match.group(1).split(", ") if proibidos_match else []
-    proibidos = [p.strip().lower() for p in proibidos if p.strip()]
+    proibidos = [p.strip().title() for p in proibidos if p.strip()]
 
-    # Extrair ingredientes desejados e normalizar
+    # Extrair e normalizar ingredientes desejados
     desejados_match = re.search(r"- Ingredientes desejados: \[(.*?)\]", output_estruturado)
     desejados = desejados_match.group(1).split(", ") if desejados_match else []
-    desejados = [d.strip().lower() for d in desejados if d.strip()]
+    desejados = [d.strip().title() for d in desejados if d.strip()]
 
     # Extrair tipo de proteína desejada
     proteina_match = re.search(r"- Proteína desejada:\s*\[(.*?)\]", output_estruturado)
-    tipo_proteina = proteina_match.group(1).strip() if proteina_match else None
+    tipo_proteina = proteina_match.group(1).strip().title() if proteina_match else None
 
-    # Função para verificar se o item contém ingredientes proibidos
+    # Normalizar os ingredientes do cardápio
+    cardapio["INGREDIENTES"] = cardapio["INGREDIENTES"].apply(lambda x: [ing.strip().title() for ing in re.split(r",\s*", x)])
+
+    # Verificar se o item contém ingredientes proibidos
     def contem_proibidos(ingredientes):
-        if not proibidos:
-            return False  # Se não há proibidos, não remove nada
-        ingredientes_lista = [ing.strip().lower() for ing in re.split(r",\s*", ingredientes)]
-        return any(ingrediente in ingredientes_lista for ingrediente in proibidos)
+        return any(p in ing for p in proibidos for ing in ingredientes)
 
-    # Função para verificar se o item contém ingredientes desejados
+    # Verificar se o item contém ingredientes desejados
     def contem_desejados(ingredientes):
-        ingredientes_lista = [ing.strip().lower() for ing in re.split(r",\s*", ingredientes)]
-        return any(ingrediente in ingredientes_lista for ingrediente in desejados)
+        return any(d in ing for d in desejados for ing in ingredientes)
 
-    # Garantir que o DataFrame não seja filtrado incorretamente
+    # Criar uma cópia do cardápio para filtrar
     cardapio_filtrado = cardapio.copy()
 
     if proibidos:
-        cardapio_filtrado = cardapio_filtrado[~cardapio_filtrado['INGREDIENTES'].apply(contem_proibidos)]
+        cardapio_filtrado = cardapio_filtrado[~cardapio_filtrado["INGREDIENTES"].apply(contem_proibidos)]
 
-    # 🔹 Verificar se algum dos ingredientes desejados existe no cardápio
-    ingredientes_existentes = set()
-    for ingredientes in cardapio_filtrado['INGREDIENTES']:
-        ingredientes_existentes.update(ing.strip().lower() for ing in re.split(r",\s*", ingredientes))
+    # 🔹 Aplicar o filtro de desejados apenas se algum ingrediente existir no dataset
+    ingredientes_existentes = set(ing for lista in cardapio_filtrado["INGREDIENTES"] for ing in lista)
+    desejados_validos = [d for d in desejados if any(d in ing for ing in ingredientes_existentes)]
 
-    desejados_validos = [d for d in desejados if d in ingredientes_existentes]
+    if desejados_validos:
+        cardapio_filtrado = cardapio_filtrado[cardapio_filtrado["INGREDIENTES"].apply(contem_desejados)]
 
-    if desejados_validos:  # Só filtra se pelo menos um dos ingredientes desejados estiver presente no dataset
-        cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['INGREDIENTES'].apply(contem_desejados)]
+    # Ajustar a filtragem da proteína para aceitar variações de nome
+    proteina_mapeamento = {
+        "Carnívoro": ["Carnívoro", "Carne Vermelha", "Frango", "Bovina", "Suína"],
+        "Vegetariano": ["Vegetariano", "Ovo-Lacto", "Ovolactovegetariano"],
+        "Vegano": ["Vegano", "100% Vegetal"]
+    }
 
-    if tipo_proteina and tipo_proteina in ["Vegano", "Vegetariano", "Carnivoro"]:
-        cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['PROTEINA'].str.lower() == tipo_proteina.lower()]
+    if tipo_proteina in proteina_mapeamento:
+        proteinas_validas = proteina_mapeamento[tipo_proteina]
+        cardapio_filtrado = cardapio_filtrado[
+            cardapio_filtrado["PROTEINA"].str.title().isin(proteinas_validas)
+        ]
 
     return cardapio_filtrado
 
