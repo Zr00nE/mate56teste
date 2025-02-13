@@ -76,32 +76,40 @@ def transformar_input_usuario(input_usuario):
     :return: Texto estruturado para melhor entendimento do embedding.
     """
     prompt = f"""
+       prompt = f"""
        Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, garantindo que:  
-    - Ingredientes desejados e proibidos sejam extraídos corretamente e normalizados para facilitar a correspondência no banco de dados.  
+    - Todos os ingredientes (desejados e proibidos) sejam convertidos para minúsculas e estejam em um formato consistente para comparação direta.  
+    - Ingredientes proibidos incluam sinônimos e variações conhecidas (ex.: "peixe" deve incluir "tilápia", "salmão", "atum", etc.).  
+    - Ingredientes desejados sejam expandidos para incluir variações conhecidas (ex.: "queijo" deve incluir "muçarela", "cheddar", "parmesão").  
     - Termos subjetivos (como "apimentado", "doce", "leve") sejam convertidos para ingredientes específicos.  
-    - Preferências de estilo culinário sejam identificadas, caso existam.  
-    - A estrutura do output esteja consistente com o esperado pela função de filtragem.  
+    - Preferências de estilo culinário e ocasião sejam identificadas com palavras-chave padronizadas.  
+    - A estrutura de saída seja fácil de extrair usando expressões regulares na função de filtragem.  
     
     Pedido: "{input_usuario}"
     
     ### **Formato de saída esperado:**  
-    - **Ingredientes desejados:** [Lista de ingredientes mencionados ou inferidos, com normalização (primeira letra maiúscula e sem variações inconsistentes); caso não haja, retorne []]  
-    - **Ingredientes proibidos:** [Lista de ingredientes que o usuário não quer, com sinônimos e variações normalizadas (ex.: "Peixe" deve incluir "Tilápia", "Salmão", "Atum", etc.); caso não haja, retorne []]  
-    - **Proteína desejada:** ["Vegano", "Vegetariano" ou "Carnívoro"; se não especificado, retorne "Carnívoro"]  
-    - **Ocasião:** ["Jantar", "Almoço", "Lanche", "Café da manhã", etc.; caso não seja mencionado, retorne "Não mencionada"]  
-    - **Preferências adicionais:** ["Nenhuma" ou outras observações importantes, como nível de dificuldade, tempo de preparo, etc.]  
-    - **Estilo culinário:** ["Mexicano", "Indiano", "Mediterrâneo", etc.; se não especificado, retorne "Não mencionado"]  
+    - ingredientes_desejados: [lista de ingredientes mencionados ou inferidos, todos em minúsculas e normalizados]  
+    - ingredientes_proibidos: [lista de ingredientes que o usuário não quer, incluindo variações e sinônimos em minúsculas]  
+    - proteina: ["vegano", "vegetariano" ou "carnívoro"; se não especificado, retorne "carnívoro"]  
+    - ocasiao: ["jantar", "almoço", "lanche", "café da manhã", etc.; se não mencionado, retorne "não mencionada"]  
+    - preferencias: ["nenhuma" ou outras observações importantes, como nível de dificuldade, tempo de preparo, etc.]  
+    - estilo_culinario: ["mexicano", "indiano", "mediterrâneo", etc.; se não especificado, retorne "não mencionado"]  
     
     ### **Conversão e Normalização de Termos Subjetivos:**  
-    - "Apimentado" → Adicione ingredientes como "Pimenta dedo-de-moça", "Jalapeño", "Pimenta caiena".  
-    - "Doce" → Adicione ingredientes como "Mel", "Açúcar mascavo", "Frutas caramelizadas".  
-    - "Leve" → Priorize ingredientes como "Frango", "Peixe", "Folhas verdes", evitando frituras.  
-    - "Confortável" → Priorize pratos quentes e cremosos, como "Massas", "Ensopados".  
+    - "apimentado" → adicionar ingredientes como "pimenta dedo-de-moça", "jalapeño", "pimenta caiena".  
+    - "doce" → adicionar ingredientes como "mel", "açúcar mascavo", "frutas caramelizadas".  
+    - "leve" → priorizar ingredientes como "frango", "peixe", "folhas verdes", evitando frituras.  
+    - "confortável" → priorizar pratos quentes e cremosos, como "massas", "ensopados".  
+    - "frutos do mar" → incluir ingredientes como "camarão", "lagosta", "siri", "lula", "polvo", "mariscos", "mexilhão".  
+    - "lactose" → incluir ingredientes como "leite", "queijo", "manteiga", "nata", "creme de leite", "iogurte".  
     
     ### **Regras de Normalização para Compatibilidade com o Filtro:**  
-    - Cada ingrediente deve começar com a primeira letra maiúscula.  
-    - Ingredientes proibidos devem incluir variações conhecidas para evitar falhas na filtragem.  
-    - Se o usuário solicitar apenas uma recomendação genérica, preencha "Sugestão genérica" na seção de tipo de requisição.   
+    - Todos os ingredientes devem estar em minúsculas para comparação direta.  
+    - Ingredientes proibidos devem incluir variações e sinônimos conhecidos.  
+    - Ingredientes desejados devem incluir variações conhecidas para aumentar as correspondências.  
+    - Utilize palavras-chave padronizadas para proteínas e ocasiões.  
+    - Se o usuário solicitar apenas uma recomendação genérica, preencha "sugestao_generica" na seção de tipo de requisição.  
+"""
         """
 
     response = client.chat.completions.create(
