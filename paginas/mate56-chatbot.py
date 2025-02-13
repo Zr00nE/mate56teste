@@ -80,11 +80,12 @@ def transformar_input_usuario(input_usuario):
     - Ingredientes desejados e proibidos sejam extraídos corretamente.  
     - Termos subjetivos (como "apimentado", "doce", "leve") sejam convertidos para ingredientes específicos.  
     - Preferências de estilo culinário sejam identificadas, caso existam.  
+    - Ponha os ingredientes no singular.
     
     Pedido: "{input_usuario}"
     
     ### **Formato de saída esperado:**  
-    - Ingredientes desejados: [Lista de ingredientes mencionados ou inferidos a partir da descrição; caso não haja, retorne []]  
+    - Ingredientes desejados: [Lista de ingredientes mencionados ou inferidos a partir da descrição ; caso não haja, retorne []]  
     - Ingredientes proibidos: [Lista de ingredientes que o usuário não quer, incluindo possíveis variações do nome; caso não haja, retorne []]  
     - Proteína desejada: ["Vegano", "Vegetariano" ou "Carnívoro"; se não especificado, retorne "Carnívoro"]  
     - Ocasião: ["Jantar", "Almoço", "Lanche", "Café da manhã", etc.; caso não seja mencionado, retorne "não mencionada"]  
@@ -95,7 +96,8 @@ def transformar_input_usuario(input_usuario):
     - "Apimentado" → Adicione ingredientes como pimenta, pimenta dedo-de-moça, jalapeño, pimenta caiena, etc.  
     - "Doce" → Adicione ingredientes como chocolate, mel, açúcar mascavo, frutas caramelizadas, etc.  
     - "Leve" → Priorize ingredientes como frango, peixe, folhas verdes, e evite frituras.  
-    - "Confortável" → Dê preferência a pratos quentes e cremosos, como massas e ensopados.  
+    - "Confortável" → Dê preferência a pratos quentes e cremosos, como massas e ensopados.
+    - "Frutos-do-mar" → incluir variações comuns de peixe como atum, salmão e outros animais marinhos como polvo e lula.
     
     Se necessário, interprete o contexto para preencher informações ausentes.  
     """
