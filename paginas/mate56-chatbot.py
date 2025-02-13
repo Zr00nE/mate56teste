@@ -86,8 +86,8 @@ def transformar_input_usuario(input_usuario):
     Pedido: "{input_usuario}"
     
     ### **Formato de saída esperado:**  
-    - Ingredientes desejados: [Lista de ingredientes mencionados ou inferidos a partir da descrição ; caso não haja, retorne []]  
-    - Ingredientes proibidos: [Lista de ingredientes que o usuário não quer, incluindo possíveis variações do nome; caso não haja, retorne []]  
+    - Ingredientes desejados: ["Lista de ingredientes mencionados ou inferidos a partir da descrição ; caso não haja, retorne []"]  
+    - Ingredientes proibidos: ["Lista de ingredientes que o usuário não quer, incluindo possíveis variações do nome; caso não haja, retorne []"]  
     - Proteína desejada: ["Vegano", "Vegetariano" ou "Carnívoro"; se não especificado, retorne "Carnívoro"]  
     - Ocasião: ["Jantar", "Almoço", "Lanche", "Café da manhã", etc.; caso não seja mencionado, retorne "não mencionada"]  
     - Preferências adicionais: ["Nenhuma" ou outras observações importantes, como nível de dificuldade, tempo de preparo, etc.]  
