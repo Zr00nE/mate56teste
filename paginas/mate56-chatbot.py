@@ -91,10 +91,13 @@ def transformar_input_usuario(input_usuario):
     - Preferências adicionais: [Qualquer outra observação relevante; caso não haja, retorne "nenhuma"]  
 
     ### **Considerações Especiais:**
-    - Se o usuário mencionar "apimentado", inclua ingredientes como pimenta, pimentão, etc.
-    - Se o usuário mencionar "frutos do mar", inclua ingredientes como camarão, polvo, mexilhões, etc.
-    - Se o usuário mencionar "lactose", inclua ingredientes como leite, queijo, manteiga, etc.
-    - Para usuários veganos, exclua automaticamente ingredientes como carne, peixe, laticínios, ovos, etc.
+    - Se o usuário mencionar "apimentado", inclua ingredientes como pimenta, pimentão, pimenta-do-reino, pimenta malagueta, etc.
+    - Se o usuário mencionar "frutos do mar ou peixes", inclua ingredientes como camarão, polvo, mexilhões, lula, ostras, tipos de peixe como Atum, Tilapia, Salmao etc.
+    - Se o usuário mencionar "lactose", inclua ingredientes como leite, queijo, manteiga, creme de leite, iogurte, etc.
+    - Para usuários veganos, exclua automaticamente ingredientes como carne, peixe, laticínios, ovos, mel, etc.
+    - Para usuários vegetarianos, exclua automaticamente ingredientes como carne e peixe, mas permita laticínios e ovos.
+    - Normalize todos os ingredientes (remova acentos e til, converta para minúsculas, etc.) para garantir compatibilidade com a função de filtro.
+    - Adicione o plural de alguns ingredientes se necessario
 
     ### **Exemplos de Entrada e Saída:**
 
