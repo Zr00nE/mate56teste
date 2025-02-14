@@ -151,7 +151,6 @@ def normalizar_ingredientes(ingredientes):
     ingredientes = ingredientes.lower()  # Converte para minúsculas
     ingredientes = ingredientes.strip()  # Remove espaços extras
     ingredientes = unidecode(ingredientes) 
-    ingredientes = ingredientes.replace(" ", "")  # Remove espaços internos (opcional)
     return ingredientes
 
 def Filtrar_Cardapio(output_estruturado, cardapio):
