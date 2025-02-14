@@ -76,17 +76,46 @@ def transformar_input_usuario(input_usuario):
     :return: Texto estruturado para melhor entendimento do embedding.
     """
     prompt = f"""
-    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, foco em garantir que os itens proibidos e os ingredientes desejados sejam identificados,:
+    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, com foco em garantir que os itens proibidos e os ingredientes desejados sejam identificados de forma precisa:
 
     Pedido: "{input_usuario}"
 
     ### **Formato de saída esperado:**  
-    - Ingredientes desejados: [ingredientes específicos que o usuário quer, apenas ingredientes comestíveis; caso não haja, retorne vazio: []]  
-    - Ingredientes proibidos: [ingredientes que o usuário não quer, tem alergia ou não gosta, incluindo variações do nome do alimento;incluindo possíveis variações do nome do alimento.
-    Exemplo: cebola deve incluir cebola roxa, cebola caramelizada, cebola branca, cebolinha, caso não haja, retorne vazio: []]  
-    - Proteína desejada: [tipo de proteína mencionada; deve ser obrigatoriamente "Vegano", "Vegetariano" ou "Carnivoro"; se não especificado, retorne "Carnivoro"]  
+    - Ingredientes desejados: [Lista de ingredientes específicos que o usuário quer, apenas ingredientes comestíveis; caso não haja, retorne vazio: []]  
+    - Ingredientes proibidos: [Lista de ingredientes que o usuário não quer, tem alergia ou não gosta, incluindo variações do nome do alimento. 
+      Exemplo: cebola deve incluir cebola roxa, cebola caramelizada, cebola branca, cebolinha; caso não haja, retorne vazio: []]  
+    - Proteína desejada: [Tipo de proteína mencionada; deve ser obrigatoriamente "Vegano", "Vegetariano" ou "Carnivoro"; se não especificado, retorne "Carnivoro"]  
     - Ocasião: [jantar, almoço, lanche, café da manhã, etc.; caso não seja mencionado, retorne "não mencionada"]  
-    - Preferências adicionais: [qualquer outra observação relevante; caso não haja, retorne "nenhuma"]  
+    - Preferências adicionais: [Qualquer outra observação relevante; caso não haja, retorne "nenhuma"]  
+
+    ### **Exemplos de Entrada e Saída:**
+
+    **Exemplo 1:**
+    - Entrada: "Quero algo vegano para o jantar, sem cebola e com abacate."
+    - Saída:
+      - Ingredientes desejados: [abacate]
+      - Ingredientes proibidos: [cebola, cebola roxa, cebola caramelizada, cebola branca, cebolinha]
+      - Proteína desejada: [Vegano]
+      - Ocasião: [jantar]
+      - Preferências adicionais: [nenhuma]
+
+    **Exemplo 2:**
+    - Entrada: "Estou procurando um prato com frango e sem glúten."
+    - Saída:
+      - Ingredientes desejados: [frango]
+      - Ingredientes proibidos: [glúten, trigo, cevada, centeio]
+      - Proteína desejada: [Carnivoro]
+      - Ocasião: [não mencionada]
+      - Preferências adicionais: [sem glúten]
+
+    **Exemplo 3:**
+    - Entrada: "Algo leve para o almoço, com quinoa e sem lactose."
+    - Saída:
+      - Ingredientes desejados: [quinoa]
+      - Ingredientes proibidos: [lactose, leite, queijo, manteiga]
+      - Proteína desejada: [Vegano]
+      - Ocasião: [almoço]
+      - Preferências adicionais: [leve]
     """
 
     response = client.chat.completions.create(
