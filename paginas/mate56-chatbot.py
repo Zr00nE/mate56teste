@@ -108,7 +108,7 @@ def transformar_input_usuario(input_usuario):
     - Ingredientes desejados devem incluir variações conhecidas para aumentar as correspondências.  
     - Utilize palavras-chave padronizadas para proteínas e ocasiões.  
     - Se o usuário solicitar apenas uma recomendação genérica, preencha "sugestao_generica" na seção de tipo de requisição.  
-        """
+    """
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
