@@ -141,10 +141,6 @@ def Embedding(texto):
 
     return response.data[0].embedding
 
-def Filtrar_Cardapio(output_estruturado, cardapio):
-
-    import re
-
 import re
 
 def normalizar_ingredientes(ingredientes):
