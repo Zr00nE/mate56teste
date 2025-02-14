@@ -118,7 +118,8 @@ def transformar_input_usuario(input_usuario):
         ]
     )
     resposta = response.choices[0].message.content
-    return resposta
+    resposta_json = json.loads(resposta)
+    return resposta_json
 
 def Embedding(texto):
     response = client.embeddings.create(
