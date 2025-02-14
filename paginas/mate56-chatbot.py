@@ -134,10 +134,15 @@ def transformar_input_usuario(input_usuario):
     return resposta_json
 
 def Embedding(texto):
+    # Garante que o texto seja uma lista de strings
+    if isinstance(texto, str):
+        texto = [texto]  # Converte para lista se for uma string única
+    
     response = client.embeddings.create(
-        input=texto,
-        model="text-embedding-3-small")
-
+        input=texto,  # Passa a lista de textos
+        model="text-embedding-3-small"
+    )
+    
     return response.data[0].embedding
 
 def Filtrar_Cardapio(input_json, cardapio):
