@@ -69,7 +69,7 @@ def similaridade_cosseno(vetor1, vetor2):
     similaridade = produto_escalar / (norma_vetor1 * norma_vetor2)
     return similaridade
 
-def transformar_input_usuario(input_usuario, client):
+def transformar_input_usuario(input_usuario):
     """
     Usa GPT para transformar o input do usuário em um formato estruturado.
     
