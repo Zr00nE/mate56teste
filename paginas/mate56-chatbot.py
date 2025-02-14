@@ -184,7 +184,8 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
         if not proibidos:
             return False
         ingredientes_lista = [normalizar_ingredientes(ing) for ing in re.split(r",\s*", ingredientes)]
-        return any(ingrediente in ingredientes_lista for ingrediente in proibidos)
+        # Verifica se algum ingrediente proibido está contido nos ingredientes do prato
+        return any(any(proibido in ingrediente for ingrediente in ingredientes_lista) for proibido in proibidos) 
 
     # Função para verificar se o item contém ingredientes desejados
     def contem_desejados(ingredientes):
