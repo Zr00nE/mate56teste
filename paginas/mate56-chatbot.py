@@ -88,6 +88,12 @@ def transformar_input_usuario(input_usuario):
     - Ocasião: [jantar, almoço, lanche, café da manhã, etc.; caso não seja mencionado, retorne "não mencionada"]  
     - Preferências adicionais: [Qualquer outra observação relevante; caso não haja, retorne "nenhuma"]  
 
+    ### **Considerações Especiais:**
+    - Se o usuário mencionar "apimentado", inclua ingredientes como pimenta, pimentão, etc.
+    - Se o usuário mencionar "frutos do mar", inclua ingredientes como camarão, polvo, mexilhões, etc.
+    - Se o usuário mencionar "lactose", inclua ingredientes como leite, queijo, manteiga, etc.
+    - Para usuários veganos, exclua automaticamente ingredientes como carne, peixe, laticínios, ovos, etc.
+
     ### **Exemplos de Entrada e Saída:**
 
     **Exemplo 1:**
@@ -226,7 +232,7 @@ if prompt:
                 cardapio_estruturado["Indicações"] = cardapio_estruturado["embeddings"].apply(lambda x: similaridade_cosseno(input_embedding, x))
                 resultados = cardapio_estruturado.sort_values(by="Indicações", ascending=False).reset_index(drop=True)
                 st.dataframe(resultados[["PRATO","INGREDIENTES"]].head(10))
-                #st.write(output_estruturado)
+                st.write(output_estruturado)
             else:
                 st.error("Erro ao gerar embeddings. Verifique se o Cardápio foi processado corretamente.")
 
