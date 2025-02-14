@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import re
 import openpyxl
+import json
 
 
 # Configurações de API 
@@ -107,8 +108,7 @@ def transformar_input_usuario(input_usuario):
     - Ingredientes proibidos devem incluir variações e sinônimos conhecidos.  
     - Ingredientes desejados devem incluir variações conhecidas para aumentar as correspondências.  
     - Utilize palavras-chave padronizadas para proteínas e ocasiões.  
-    - Se o usuário solicitar apenas uma recomendação genérica, preencha "sugestao_generica" na seção de tipo de requisição.  
-    """
+    - Se o usuário solicitar apenas uma recomendação genérica, preencha "sugestao_generica" na seção de tipo de requisição.  """
 
     response = client.chat.completions.create(
         model="gpt-4o-mini",
@@ -203,7 +203,8 @@ if prompt:
         
         try:
             output_estruturado = transformar_input_usuario(st.session_state.messages[-1]["content"])
-            cardapio_estruturado = Filtrar_Cardapio(output_estruturado, Cardapio)
+            input_json = json.loads(output_estruturado) if isinstance(output_estruturado, str) else output_estruturado
+            cardapio_estruturado = Filtrar_Cardapio(input_json, Cardapio)
             input_embedding = Embedding(output_estruturado)
 
             if "embeddings" in cardapio_estruturado.columns:
