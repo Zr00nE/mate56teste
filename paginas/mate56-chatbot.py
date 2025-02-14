@@ -6,7 +6,6 @@ import re
 import openpyxl
 import json
 
-
 # Configurações de API 
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 client = OpenAI(api_key=openai_api_key)
@@ -18,7 +17,7 @@ card = 'arquivos/CARDAPIO_TOPICOS.xlsx'
 Cardapio = pd.read_excel(card)
 
 # Configurações de modelo e carregamento de instruções do assistente
-modelo = 'gpt-4o-mini'
+modelo = 'gpt-4o-mini'  # Atualize para o modelo correto
 instrucoes = 'arquivos/assistente-python.txt'
 with open(instrucoes, 'r', encoding='utf-8') as file:
     instrucoes_gpt = file.read()
@@ -35,7 +34,6 @@ if "messages" not in st.session_state:
 for msg in st.session_state.messages[1:]:
     avatar = avatar_user if msg['role'] == 'user' else avatar_assistent
     st.chat_message(msg["role"], avatar=avatar).write(msg["content"])
-
 
 ################################################## Funções ##########################################################
 
@@ -74,7 +72,6 @@ def transformar_input_usuario(input_usuario):
     Usa GPT para transformar o input do usuário em um formato estruturado.
     
     :param input_usuario: Texto original do usuário.
-    :param client: Cliente da API GPT (OpenAI, etc.).
     :return: Dicionário com as preferências do usuário.
     """
     prompt = f"""
@@ -112,7 +109,7 @@ def transformar_input_usuario(input_usuario):
     - Se o usuário solicitar apenas uma recomendação genérica, preencha "sugestao_generica" na seção de tipo de requisição.  """
 
     response = client.chat.completions.create(
-        model="gpt-4",  # Atualize para o modelo correto
+        model=modelo,  # Usa o modelo configurado
         messages=[
             {"role": "system", "content": "Você é um assistente que organiza pedidos de comida de forma clara e estruturada."},
             {"role": "user", "content": prompt}
@@ -142,7 +139,6 @@ def Embedding(texto):
         model="text-embedding-3-small")
 
     return response.data[0].embedding
-
 
 def Filtrar_Cardapio(input_json, cardapio):
     """
@@ -199,10 +195,9 @@ def Filtrar_Cardapio(input_json, cardapio):
     # Retornar o cardápio filtrado
     return cardapio_filtrado
 
-
 ##############################################################################################################################################################################
 
-#Captura a entrada do usuário no chat e gera uma resposta
+# Captura a entrada do usuário no chat e gera uma resposta
 prompt = st.chat_input()
 
 Colunas = ["INGREDIENTES", "OCASIAO", "PROTEINA","GLUTEN"]
