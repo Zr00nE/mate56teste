@@ -77,7 +77,7 @@ def transformar_input_usuario(input_usuario):
     :return: Texto estruturado para melhor entendimento do embedding.
     """
     prompt = f"""
-       Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, garantindo que:  
+    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, garantindo que:  
     - Todos os ingredientes (desejados e proibidos) sejam convertidos para minúsculas e estejam em um formato consistente para comparação direta.  
     - Ingredientes proibidos incluam sinônimos e variações conhecidas e suas variações no plural (ex.: "peixe" deve incluir "tilápia", "salmão", "atum", etc.).  
     - Ingredientes desejados sejam expandidos para incluir variações conhecidas (ex.: "queijo" deve incluir "muçarela", "cheddar", "parmesão").  
