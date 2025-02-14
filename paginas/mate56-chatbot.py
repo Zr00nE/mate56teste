@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import re
 import openpyxl
+from unidecode import unidecode
 
 
 # Configurações de API 
@@ -149,6 +150,7 @@ def normalizar_ingredientes(ingredientes):
     """
     ingredientes = ingredientes.lower()  # Converte para minúsculas
     ingredientes = ingredientes.strip()  # Remove espaços extras
+    ingredientes = unidecode(ingredientes) 
     ingredientes = ingredientes.replace(" ", "")  # Remove espaços internos (opcional)
     return ingredientes
 
