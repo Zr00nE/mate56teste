@@ -77,7 +77,8 @@ def transformar_input_usuario(input_usuario):
     :return: Texto estruturado para melhor entendimento do embedding.
     """
     prompt = f"""
-    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, com foco em garantir que os itens proibidos e os ingredientes desejados sejam identificados de forma precisa:
+    Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, com foco em garantir que os itens proibidos e os ingredientes desejados sejam identificados de forma precisa
+    normalize os texto deixe-os com letra minuscula e sem acentos:
 
     Pedido: "{input_usuario}"
 
