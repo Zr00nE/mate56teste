@@ -69,12 +69,13 @@ def similaridade_cosseno(vetor1, vetor2):
     similaridade = produto_escalar / (norma_vetor1 * norma_vetor2)
     return similaridade
 
-def transformar_input_usuario(input_usuario):
+def transformar_input_usuario(input_usuario, client):
     """
     Usa GPT para transformar o input do usuário em um formato estruturado.
     
     :param input_usuario: Texto original do usuário.
-    :return: Texto estruturado para melhor entendimento do embedding.
+    :param client: Cliente da API GPT (OpenAI, etc.).
+    :return: Dicionário com as preferências do usuário.
     """
     prompt = f"""
     Transforme o seguinte pedido do usuário em uma descrição estruturada, clara e organizada, garantindo que:  
@@ -111,14 +112,28 @@ def transformar_input_usuario(input_usuario):
     - Se o usuário solicitar apenas uma recomendação genérica, preencha "sugestao_generica" na seção de tipo de requisição.  """
 
     response = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4",  # Atualize para o modelo correto
         messages=[
             {"role": "system", "content": "Você é um assistente que organiza pedidos de comida de forma clara e estruturada."},
             {"role": "user", "content": prompt}
         ]
     )
     resposta = response.choices[0].message.content
-    resposta_json = json.loads(resposta)
+    
+    # Converter a resposta para JSON
+    try:
+        resposta_json = json.loads(resposta)
+    except json.JSONDecodeError:
+        # Se a resposta não for JSON válido, criar um dicionário padrão
+        resposta_json = {
+            "ingredientes_desejados": [],
+            "ingredientes_proibidos": [],
+            "proteina": "carnívoro",
+            "ocasiao": "não mencionada",
+            "preferencias": "nenhuma",
+            "estilo_culinario": "não mencionado"
+        }
+    
     return resposta_json
 
 def Embedding(texto):
@@ -139,12 +154,12 @@ def Filtrar_Cardapio(input_json, cardapio):
     """
     
     # Extrair informações do JSON de input
-    ingredientes_desejados = [i.strip() for i in input_json.get("ingredientes_desejados", [])]
-    ingredientes_proibidos = [i.strip() for i in input_json.get("ingredientes_proibidos", [])]
-    tipo_proteina = input_json.get("proteina", "carnívoro").strip()
+    ingredientes_desejados = [i.strip().lower() for i in input_json.get("ingredientes_desejados", [])]
+    ingredientes_proibidos = [i.strip().lower() for i in input_json.get("ingredientes_proibidos", [])]
+    tipo_proteina = input_json.get("proteina", "carnívoro").strip().lower()
 
     # Normalizar ingredientes do cardápio
-    cardapio["INGREDIENTES"] = cardapio["INGREDIENTES"].apply(lambda x: [ing.strip() for ing in x.split(",")])
+    cardapio["INGREDIENTES"] = cardapio["INGREDIENTES"].apply(lambda x: [ing.strip().lower() for ing in x.split(",")])
 
     # Função para verificar se um prato contém ingredientes proibidos
     def contem_proibidos(ingredientes):
