@@ -141,34 +141,48 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
 
 import re
 
+def normalizar_ingredientes(ingredientes):
+    """
+    Normaliza os ingredientes para um formato consistente.
+    """
+    ingredientes = ingredientes.lower()  # Converte para minúsculas
+    ingredientes = ingredientes.strip()  # Remove espaços extras
+    ingredientes = ingredientes.replace(" ", "")  # Remove espaços internos (opcional)
+    return ingredientes
+
 def Filtrar_Cardapio(output_estruturado, cardapio):
+    """
+    Filtra o cardápio com base no output estruturado do GPT.
+    """
+    # Normaliza os ingredientes no cardápio
+    cardapio['INGREDIENTES'] = cardapio['INGREDIENTES'].apply(normalizar_ingredientes)
 
     # Extrair ingredientes proibidos e normalizar
     proibidos_match = re.search(r"- Ingredientes proibidos: \[(.*?)\]", output_estruturado)
     proibidos = proibidos_match.group(1).split(", ") if proibidos_match else []
-    proibidos = [p.strip().lower() for p in proibidos if p.strip()]  # Remove espaços extras e valores vazios
+    proibidos = [normalizar_ingredientes(p) for p in proibidos if p.strip()]
 
     # Extrair ingredientes desejados e normalizar
     desejados_match = re.search(r"- Ingredientes desejados: \[(.*?)\]", output_estruturado)
     desejados = desejados_match.group(1).split(", ") if desejados_match else []
-    desejados = [d.strip().lower() for d in desejados if d.strip()]
+    desejados = [normalizar_ingredientes(d) for d in desejados if d.strip()]
 
     # Extrair tipo de proteína desejada
     proteina_match = re.search(r"- Proteína desejada:\s*\[(.*?)\]", output_estruturado)
-    tipo_proteina = proteina_match.group(1).strip() if proteina_match else None
+    tipo_proteina = proteina_match.group(1).strip().lower() if proteina_match else None
 
     # Função para verificar se o item contém ingredientes proibidos
     def contem_proibidos(ingredientes):
         if not proibidos:
-            return False  # Se não há proibidos, não remove nada
-        ingredientes_lista = [ing.strip().lower() for ing in re.split(r",\s*", ingredientes)]
+            return False
+        ingredientes_lista = [normalizar_ingredientes(ing) for ing in re.split(r",\s*", ingredientes)]
         return any(ingrediente in ingredientes_lista for ingrediente in proibidos)
 
     # Função para verificar se o item contém ingredientes desejados
     def contem_desejados(ingredientes):
         if not desejados:
-            return True  # Se não há desejados, aceita todos os pratos
-        ingredientes_lista = [ing.strip().lower() for ing in re.split(r",\s*", ingredientes)]
+            return True
+        ingredientes_lista = [normalizar_ingredientes(ing) for ing in re.split(r",\s*", ingredientes)]
         return any(ingrediente in ingredientes_lista for ingrediente in desejados)
 
     # Garantir que o DataFrame não seja filtrado incorretamente
@@ -180,8 +194,8 @@ def Filtrar_Cardapio(output_estruturado, cardapio):
     if desejados:
         cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['INGREDIENTES'].apply(contem_desejados)]
 
-    if tipo_proteina and tipo_proteina in ["Vegano", "Vegetariano", "Carnivoro"]:
-        cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['PROTEINA'].str.lower() == tipo_proteina.lower()]
+    if tipo_proteina and tipo_proteina in ["vegano", "vegetariano", "carnivoro"]:
+        cardapio_filtrado = cardapio_filtrado[cardapio_filtrado['PROTEINA'].str.lower() == tipo_proteina]
 
     return cardapio_filtrado
 
